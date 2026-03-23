@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Data Display</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <style>
+        .highlight { background-color: yellow; }
+    </style>
+</head>
+<body>
+    <h1>CSV Data Display</h1>
+    <input type="text" id="searchFamilia" placeholder="Search Familia" />
+    <input type="text" id="searchSubfamilia" placeholder="Search Subfamilia" />
+    <table id="dataTable" border="1">
+        <thead></thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        const tableBody = document.querySelector('tbody');
+        const searchFamilia = document.getElementById('searchFamilia');
+        const searchSubfamilia = document.getElementById('searchSubfamilia');
+
+        Papa.parse('causas_sheets - causas_sheets.csv.csv', {
+            download: true,
+            header: true,
+            complete: function(results) {
+                const data = results.data;
+                createTable(data);
+            }
+        });
+
+        function createTable(data) {
+            const header = Object.keys(data[0]);
+            const thead = document.querySelector('thead');
+            thead.innerHTML = `<tr>${header.map(h => `<th>${h}</th>`).join('')}</tr>`;
+
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                header.forEach(col => {
+                    const td = document.createElement('td');
+                    td.textContent = row[col];
+                    if (col === 'Script RRSS') td.classList.add('highlight');
+                    tr.appendChild(td);
+                });
+                tableBody.appendChild(tr);
+            });
+
+            searchFamilia.addEventListener('input', function() { filterTable(data); });
+            searchSubfamilia.addEventListener('input', function() { filterTable(data); });
+        }
+
+        function filterTable(originalData) {
+            const familiaFilter = searchFamilia.value.toLowerCase();
+            const subfamiliaFilter = searchSubfamilia.value.toLowerCase();
+
+            tableBody.innerHTML = ''; // Clear table body
+
+            const filteredData = originalData.filter(row => {
+                return (row['Familia'].toLowerCase().includes(familiaFilter)) && 
+                       (row['Subfamilia'].toLowerCase().includes(subfamiliaFilter));
+            });
+
+            createTable(filteredData);
+        }
+    </script>
+</body>
+</html>
