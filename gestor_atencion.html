@@ -1,72 +1,65 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestor de Atención al Cliente</title>
-    <style>
-        body { font-family: Arial, sans-serif; }
-        .container { display: flex; }
-        .left-column { flex: 1; padding: 20px; }
-        .right-column { flex: 1; padding: 20px; }
-        header { text-align: center; margin-bottom: 20px; }
-        .time-buttons { margin: 10px 0; }
-        .questionnaire { margin-bottom: 20px; }
-    </style>
+    <title>Customer Service Manager Interface</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>Gestor de Atención al Cliente</h1>
-        <h2>Ejecutivo: [Nombre del Ejecutivo]</h2>
-        <h3>Cliente: [Nombre del Cliente]</h3>
-        <h4>Número de Caso: [Número de Caso]</h4>
+        <h1>Customer Service Manager</h1>
+        <form id="case-form">
+            <label for="executive">Executive:</label>
+            <input type="text" id="executive" name="executive" required>
+            <label for="client">Client:</label>
+            <input type="text" id="client" name="client" required>
+            <label for="case-number">Case Number:</label>
+            <input type="text" id="case-number" name="case-number" required>
+            <div>
+                <input type="radio" id="morning" name="time" value="morning">
+                <label for="morning">Morning</label>
+                <input type="radio" id="afternoon" name="time" value="afternoon">
+                <label for="afternoon">Afternoon</label>
+            </div>
+        </form>
     </header>
-
-    <div class="time-buttons">
-        <button>Mañana</button>
-        <button>Tarde</button>
-    </div>
-
-    <div class="container">
-        <div class="left-column">
-            <div class="questionnaire">
-                <h3>Tipo de Contacto</h3>
-                <select>
-                    <option value="telefono">Teléfono</option>
-                    <option value="correo">Correo Electrónico</option>
-                    <option value="chat">Chat</option>
-                </select>
+    <main>
+        <section id="questionnaire">
+            <h2>Questionnaire</h2>
+            <label for="contact-type">Contact Type:</label>
+            <select id="contact-type" name="contact-type">
+                <option value="phone">Phone</option>
+                <option value="email">Email</option>
+                <option value="chat">Chat</option>
+            </select>
+            <label for="request-type">Request Type:</label>
+            <select id="request-type" name="request-type">
+                <option value="information">Information</option>
+                <option value="support">Support</option>
+                <option value="complaint">Complaint</option>
+            </select>
+            <label for="cause">Cause:</label>
+            <select id="cause" name="cause">
+                <option value="technical">Technical Issue</option>
+                <option value="billing">Billing Issue</option>
+                <option value="service">Service Inquiry</option>
+            </select>
+        </section>
+        <aside>
+            <div id="conditions-panel">
+                <h2>Conditions</h2>
+                <p>Here you can inform about conditions...</p>
             </div>
-
-            <div class="questionnaire">
-                <h3>Tipo de Solicitud</h3>
-                <select>
-                    <option value="consulta">Consulta</option>
-                    <option value="reclamo">Reclamo</option>
-                    <option value="sugerencia">Sugerencia</option>
-                </select>
+            <div id="scripts-panel">
+                <h2>Scripts</h2>
+                <textarea placeholder="Empathy Phrases..."></textarea>
+                <textarea placeholder="Containment Messages..."></textarea>
             </div>
-
-            <div class="questionnaire">
-                <h3>Causa</h3>
-                <select>
-                    <option value="producto">Problema con el Producto</option>
-                    <option value="servicio">Problema con el Servicio</option>
-                    <option value="otro">Otro</option>
-                </select>
-            </div>
-
-            <div class="conditions">
-                <h3>Condiciones</h3>
-                <p>[Detalles de las condiciones]</p>
-            </div>
-        </div>
-
-        <div class="right-column">
-            <h3>Scripts con Frases de Empatía</h3>
-            <p>[Tuve un problema similar, entiendo tu frustración.]</p>
-            <p>[Quiero asegurarme de que obtengas la asistencia que necesitas, cuéntame más.]</p>
-        </div>
-    </div>
+        </aside>
+    </main>
+    <footer>
+        <button type="submit" form="case-form">Submit</button>
+    </footer>
 </body>
 </html>
